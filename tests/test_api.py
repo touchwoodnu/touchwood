@@ -6,6 +6,12 @@ import sys
 import json
 import touchwood.api as touchwood
 
+try:
+    from nose_parameterized import parameterized, param
+except:
+    print("*** Please install 'nose_parameterized' to run these tests ***")
+    exit(0)
+
 access_key = None
 access_secret = None
 apiserver = None
@@ -34,17 +40,24 @@ class Test_Test(unittest.TestCase):
             apiserver = os.getenv("TW_API_SERVER")
             api = touchwood.API(apiserver, request_options={"verify": False})
 
-    def test_leveranciers(self):
+    @parameterized.expand([
+                           (None,),
+                           ("skantrae",),
+                          ])
+    def test__get_suppliers(self, supplier):
         """TEST: endpoint: touchwood/leveranciers."""
         r = None
         try:
-            r = api.get_suppliers()
+            r = api.get_suppliers(supplier=supplier)
         except touchwood.TouchwoodAPIError as e:
             print("{}".format(e))
         except Exception as e:
             print("{}".format(e))
         else:
-            self.assertTrue(len(r['leveranciers']))
+            if supplier:
+                self.assertTrue(len(r['leveranciers']) == 1)
+            else:
+                self.assertTrue(len(r['leveranciers']) > 1)
 
 if __name__ == "__main__":
 

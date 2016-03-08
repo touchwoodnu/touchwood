@@ -3,7 +3,7 @@ import json
 import requests
 import six
 
-APIVERSION = "v0.1"
+APIVERSION = ""
 
 
 class EndpointsMixin(object):
@@ -14,13 +14,23 @@ class EndpointsMixin(object):
     as a keyword argument.
     """
 
-    def get_suppliers(self, params=None):
+    def get_suppliers(self, supplier=None, **params):
         """get_suppliers - get a list of available suppliers.
 
+        API-endpoints
+        -------------
+        touchwood/leveranciers
+        touchwood/leveranciers/:leverancier
+
         returns :
-            a dictionary containing a list of available suppliers
+            a dictionary containing a list of available suppliers or
+            a list with only the details of the specified supplier
         """
         endpoint = "touchwood/leveranciers"
+
+        if supplier:
+            endpoint += "/{}".format(supplier)
+
         return self.request(endpoint, params=params)
 
 
@@ -75,10 +85,11 @@ class API(EndpointsMixin, object):
 
         returns dict of response from Touchwood REST-API
         """
-        endpoint = "{}/{}".format(APIVERSION, endpoint)
+        if APIVERSION:
+            endpoint = "{}/{}".format(APIVERSION, endpoint)
         url = "{}/{}".format(self.api_url, endpoint)
 
-        # print("URL: {}".format(url))
+        # print("**** URL: {}".format(url))
         method = method.lower()
         params = params or {}
 
