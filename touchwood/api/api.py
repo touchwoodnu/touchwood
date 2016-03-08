@@ -118,6 +118,24 @@ class EndpointsMixin(object):
 
         return self.request(endpoint, params=params)
 
+    def get_sizing(self, supplier, assortment, article, **params):
+        """get_sizing - get sizing options of specified article.
+
+        API-endpoints
+        -------------
+        touchwood/leveranciers/:supplier/assortimenten/:assortment/artikelen/:artikel/maatvoering/
+
+        returns :
+            a dictionary containing a list of configuration specs of the specified
+            article
+        """
+        endpoint = ("touchwood/leveranciers/{}/assortimenten/{}/" +
+                    "artikelen/{}/maatvoering").format(supplier,
+                                                       assortment,
+                                                       article)
+
+        return self.request(endpoint, params=params)
+
 
 class API(EndpointsMixin, object):
     """API - Touchwood API class for the Touchwood REST API."""

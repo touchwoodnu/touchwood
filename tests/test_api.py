@@ -126,6 +126,23 @@ class Test_Test(unittest.TestCase):
             if supplier:
                 self.assertTrue(len(r['ass']) > 1)
 
+    @parameterized.expand([
+                           ("austria", "binnendeuren classicline", "VEERE"),
+                          ])
+    def test__get_sizing(self, supplier, assortment, article):
+        """TEST: endpoint: touchwood/leveranciers/:supplier/assortimenten/:assortment/:article/sizing/"""
+        r = None
+        try:
+            r = api.get_sizing(supplier=supplier, assortment=assortment,
+                               article=article)
+        except touchwood.TouchwoodAPIError as e:
+            print("{}".format(e))
+        except Exception as e:
+            print("{}".format(e))
+        else:
+            if supplier:
+                self.assertTrue(len(r['mv']['sm']) == 2)
+
 if __name__ == "__main__":
 
     unittest.main()
