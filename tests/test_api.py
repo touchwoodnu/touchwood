@@ -59,6 +59,22 @@ class Test_Test(unittest.TestCase):
             else:
                 self.assertTrue(len(r['leveranciers']) > 1)
 
+    @parameterized.expand([
+                           ("skantrae",),
+                          ])
+    def test__get_assortments(self, supplier):
+        """TEST: endpoint: touchwood/leveranciers/:supplier/assortimenten/."""
+        r = None
+        try:
+            r = api.get_assortments(supplier=supplier)
+        except touchwood.TouchwoodAPIError as e:
+            print("{}".format(e))
+        except Exception as e:
+            print("{}".format(e))
+        else:
+            if supplier:
+                self.assertTrue(len(r['ass']) > 1)
+
 if __name__ == "__main__":
 
     unittest.main()

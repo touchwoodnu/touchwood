@@ -48,6 +48,21 @@ class EndpointsMixin(object):
 
         return self.request(endpoint, params=params)
 
+    def get_articles(self, supplier, assortment, **params):
+        """get_articles - get all articles belonging to assortment.
+
+        API-endpoints
+        -------------
+        touchwood/leveranciers/:supplier/assortimenten/:assortment/artikelen/
+
+        returns :
+            a dictionary containing a list of articles of the specified
+            assortment
+        """
+        endpoint = "touchwood/leveranciers/{}/assortimenten/{}/artikelen".\
+                   format(supplier, assortment)
+
+        return self.request(endpoint, params=params)
 
 
 class API(EndpointsMixin, object):
