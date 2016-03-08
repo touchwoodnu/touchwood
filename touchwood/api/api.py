@@ -82,6 +82,24 @@ class EndpointsMixin(object):
 
         return self.request(endpoint, params=params)
 
+    def get_images(self, supplier, assortment, article, **params):
+        """get_images - get images of specified article.
+
+        API-endpoints
+        -------------
+        touchwood/leveranciers/:supplier/assortimenten/:assortment/artikelen/:artikel/images/
+
+        returns :
+            a dictionary containing a list of images of the specified
+            article
+        """
+        endpoint = ("touchwood/leveranciers/{}/assortimenten/{}/" +
+                    "artikelen/{}/images").format(supplier,
+                                                     assortment,
+                                                     article)
+
+        return self.request(endpoint, params=params)
+
 
 class API(EndpointsMixin, object):
     """API - Touchwood API class for the Touchwood REST API."""
