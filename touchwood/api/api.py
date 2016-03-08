@@ -64,6 +64,24 @@ class EndpointsMixin(object):
 
         return self.request(endpoint, params=params)
 
+    def get_properties(self, supplier, assortment, article, **params):
+        """get_properties - get properties of specified article.
+
+        API-endpoints
+        -------------
+        touchwood/leveranciers/:supplier/assortimenten/:assortment/artikelen/:artikel/kenmerken/
+
+        returns :
+            a dictionary containing a list of properties of the specified
+            article
+        """
+        endpoint = ("touchwood/leveranciers/{}/assortimenten/{}/" +
+                    "artikelen/{}/kenmerken").format(supplier,
+                                                     assortment,
+                                                     article)
+
+        return self.request(endpoint, params=params)
+
 
 class API(EndpointsMixin, object):
     """API - Touchwood API class for the Touchwood REST API."""
