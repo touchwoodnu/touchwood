@@ -95,8 +95,26 @@ class EndpointsMixin(object):
         """
         endpoint = ("touchwood/leveranciers/{}/assortimenten/{}/" +
                     "artikelen/{}/images").format(supplier,
-                                                     assortment,
-                                                     article)
+                                                  assortment,
+                                                  article)
+
+        return self.request(endpoint, params=params)
+
+    def get_specs(self, supplier, assortment, article, **params):
+        """get_specs - get specs of specified article.
+
+        API-endpoints
+        -------------
+        touchwood/leveranciers/:supplier/assortimenten/:assortment/artikelen/:artikel/specs/
+
+        returns :
+            a dictionary containing a list of configuration specs of the specified
+            article
+        """
+        endpoint = ("touchwood/leveranciers/{}/assortimenten/{}/" +
+                    "artikelen/{}/specs").format(supplier,
+                                                 assortment,
+                                                 article)
 
         return self.request(endpoint, params=params)
 

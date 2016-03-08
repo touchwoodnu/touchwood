@@ -109,6 +109,23 @@ class Test_Test(unittest.TestCase):
             if supplier:
                 self.assertTrue(len(r['images']) == 3)
 
+    @parameterized.expand([
+                           ("austria", "binnendeuren classicline", "VEERE"),
+                          ])
+    def test__get_specs(self, supplier, assortment, article):
+        """TEST: endpoint: touchwood/leveranciers/:supplier/assortimenten/:assortment/:article/specs/"""
+        r = None
+        try:
+            r = api.get_specs(supplier=supplier, assortment=assortment,
+                              article=article)
+        except touchwood.TouchwoodAPIError as e:
+            print("{}".format(e))
+        except Exception as e:
+            print("{}".format(e))
+        else:
+            if supplier:
+                self.assertTrue(len(r['ass']) > 1)
+
 if __name__ == "__main__":
 
     unittest.main()
