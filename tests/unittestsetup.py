@@ -11,7 +11,8 @@ def auth():
     access_secret = os.getenv("TW_ACCESS_SECRET")
 
     if "" in [access_key, access_secret]:
-        raise Exception("\n"
+        raise Exception(
+            "\n"
             "*************************************************************\n"
             "*** TO RUN THE TESTS:                                     ***\n"
             "*** please provide env TW_ACCESS_KEY and TW_ACCESS_SECRET ***\n"
