@@ -2,6 +2,7 @@
 import json
 import requests
 import six
+from . exceptions import TouchwoodAPIError
 
 APIVERSION = ""
 
