@@ -19,9 +19,9 @@ requirements = map(str.strip, open("requirements.txt").readlines())
 
 version = get_version('touchwood')
 
-setup(name='touchwood_api',
+setup(name='touchwood',
       version=version,
-      description="Python wrapper for the Touchwood REST API",
+      description="Python Touchwood REST API interface",
       long_description="",
       # Get strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
