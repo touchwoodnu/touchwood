@@ -53,11 +53,11 @@ class Test_Test(unittest.TestCase):
             print("{}".format(e))
         except Exception as e:
             print("{}".format(e))
+
+        if supplier:
+            self.assertTrue(r and len(r['leveranciers']) == 1)
         else:
-            if supplier:
-                self.assertTrue(len(r['leveranciers']) == 1)
-            else:
-                self.assertTrue(len(r['leveranciers']) > 1)
+            self.assertTrue(r and len(r['leveranciers']) > 1)
 
     @parameterized.expand([
                            ("skantrae",),
@@ -71,9 +71,8 @@ class Test_Test(unittest.TestCase):
             print("{}".format(e))
         except Exception as e:
             print("{}".format(e))
-        else:
-            if supplier:
-                self.assertTrue(len(r['ass']) > 1)
+
+        self.assertTrue(r and len(r['ass']) > 1)
 
     @parameterized.expand([
                            ("austria", "binnendeuren classicline", "VEERE"),
@@ -88,9 +87,8 @@ class Test_Test(unittest.TestCase):
             print("{}".format(e))
         except Exception as e:
             print("{}".format(e))
-        else:
-            if supplier:
-                self.assertTrue(len(r['kenmerken']) > 1)
+
+        self.assertTrue(r and len(r['kenmerken']) > 1)
 
     @parameterized.expand([
                            ("austria", "binnendeuren classicline", "VEERE"),
@@ -105,9 +103,8 @@ class Test_Test(unittest.TestCase):
             print("{}".format(e))
         except Exception as e:
             print("{}".format(e))
-        else:
-            if supplier:
-                self.assertTrue(len(r['images']) == 3)
+
+        self.assertTrue(r and len(r['images']) == 3)
 
     @parameterized.expand([
                            ("austria", "binnendeuren classicline", "VEERE"),
@@ -122,9 +119,8 @@ class Test_Test(unittest.TestCase):
             print("{}".format(e))
         except Exception as e:
             print("{}".format(e))
-        else:
-            if supplier:
-                self.assertTrue(len(r['ass']) > 1)
+
+        self.assertTrue(r and len(r['ass']) > 1)
 
     @parameterized.expand([
                            ("austria", "binnendeuren classicline", "VEERE"),
@@ -139,9 +135,8 @@ class Test_Test(unittest.TestCase):
             print("{}".format(e))
         except Exception as e:
             print("{}".format(e))
-        else:
-            if supplier:
-                self.assertTrue(len(r['mv']['sm']) == 2)
+
+        self.assertTrue(r and len(r['mv']['sm']) == 2)
 
 if __name__ == "__main__":
 
