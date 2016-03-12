@@ -90,12 +90,18 @@ class API(ArticleEndpointsMixin,
             raise e
 
         content = response.content.decode('utf-8')
+        try:
+            # asume content is always JSON
+            # - either data
+            # - or error description for HTTP status code >= 400
+            content = json.loads(content)
+        except Exception as e:
+            raise e
 
         # error message
         if response.status_code >= 400:
             raise TouchwoodAPIError(dict(code=response.status_code,
                                          message=content))
 
-        content = json.loads(content)
 
         return content
