@@ -4,11 +4,14 @@ import requests
 import six
 from . exceptions import TouchwoodAPIError
 from . endpoints.article import ArticleEndpointsMixin
+from . endpoints.cart import CartEndpointsMixin
 
 APIVERSION = ""
 
 
-class API(ArticleEndpointsMixin, object):
+class API(ArticleEndpointsMixin,
+          CartEndpointsMixin,
+          object):
     """API - Touchwood API class for the Touchwood REST API."""
 
     def __init__(self, api_url, access_token=None, headers=None,
@@ -61,7 +64,7 @@ class API(ArticleEndpointsMixin, object):
         """
         if APIVERSION:
             endpoint = "{}/{}".format(APIVERSION, endpoint)
-        url = "{}/{}".format(self.api_url, endpoint)
+        url = "{}/{}/".format(self.api_url, endpoint)
 
         # print("**** URL: {}".format(url))
         method = method.lower()
@@ -83,12 +86,16 @@ class API(ArticleEndpointsMixin, object):
             response = func(url, **request_args)
         except requests.RequestException as e:
             raise e
-        content = response.content.decode('utf-8')
+        except Exception as e:
+            raise e
 
-        content = json.loads(content)
+        content = response.content.decode('utf-8')
 
         # error message
         if response.status_code >= 400:
-            raise TouchwoodAPIError(content)
+            raise TouchwoodAPIError(dict(code=response.status_code,
+                                         message=content))
+
+        content = json.loads(content)
 
         return content
