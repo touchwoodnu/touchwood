@@ -1,8 +1,4 @@
 """Touchwood REST-API wrapper."""
-import json
-import requests
-import six
-from ..exceptions import TouchwoodAPIError
 
 APIVERSION = ""
 
@@ -109,8 +105,8 @@ class ArticleEndpointsMixin(object):
         touchwood/leveranciers/:supplier/assortimenten/:assortment/artikelen/:artikel/specs/
 
         returns :
-            a dictionary containing a list of configuration specs of the specified
-            article
+            a dictionary containing a list of configuration specs of the
+            specified article
         """
         endpoint = ("touchwood/leveranciers/{}/assortimenten/{}/" +
                     "artikelen/{}/specs").format(supplier,
@@ -127,8 +123,7 @@ class ArticleEndpointsMixin(object):
         touchwood/leveranciers/:supplier/assortimenten/:assortment/artikelen/:artikel/maatvoering/
 
         returns :
-            a dictionary containing a list of configuration specs of the specified
-            article
+            a dictionary containing a sizing specs of the specified article.
         """
         endpoint = ("touchwood/leveranciers/{}/assortimenten/{}/" +
                     "artikelen/{}/maatvoering").format(supplier,
