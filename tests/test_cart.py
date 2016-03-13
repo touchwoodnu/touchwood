@@ -101,7 +101,7 @@ class Test_CartAPI(unittest.TestCase):
                            ])
     def test__add_item(self, articles):
         """cart_add_item and cat_get_item."""
-        # first we add an item
+        # make sure cart is empty
         r = api.cart_delete_item()
         r = api.cart_get_items()
         self.assertTrue(r['items'] == {})
@@ -115,6 +115,40 @@ class Test_CartAPI(unittest.TestCase):
             r = api.cart_get_item(cid=justAdded)
             self.assertTrue(justAdded in r['items'] and
                             A == r['items'][justAdded]['article']['id'])
+
+    @parameterized.expand([(["N900"], "2", "10.0"),
+                           (["N901"], "5", None),
+                           (["N902"], None, "15.0"),
+                           ])
+    def test__update_item(self, articles, count, rebate):
+        """cart_update_item."""
+        # make sure cart is empty
+        r = api.cart_delete_item()
+        r = api.cart_get_items()
+        self.assertTrue(r['items'] == {})
+
+        for A in articles:
+            toadd = dict(id=A, csrfmiddlewaretoken=csrfmiddlewaretoken)
+            r = api.cart_add_item(**toadd)
+            justAdded = r['cid']
+            # get it from the cart
+            r = api.cart_get_item(cid=justAdded)
+            self.assertTrue(justAdded in r['items'] and
+                            A == r['items'][justAdded]['article']['id'])
+            # update
+            toupd = dict()
+            if count:
+                toupd.update({'aantal': count})
+            if rebate:
+                toupd.update({'korting': rebate})
+
+            # make the request to update the named parameters
+            r = api.cart_update_item(cid=justAdded, **toupd)
+
+            self.assertTrue(
+                justAdded == r['cid'] and
+                (not rebate or float(rebate) == float(r['korting'])) and
+                (not count or count == r['aantal']))
 
 
 if __name__ == "__main__":
