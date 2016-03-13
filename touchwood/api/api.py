@@ -79,7 +79,7 @@ class API(ArticleEndpointsMixin,
 
         if method == 'get':
             request_args['params'] = params
-        else:
+        elif method in ["put", "post", "patch"]:
             request_args['data'] = params
 
         try:
