@@ -116,3 +116,31 @@ class CartEndpointsMixin(object):
             endpoint += "/{}".format(item)
 
         return self.request(endpoint, "DELETE", params=params)
+
+    def cart_update_item(self, cid, **params):
+        """cart_update_item - update item from cart with cid.
+
+        API-endpoints
+        -------------
+        cart/items
+
+        Parameters
+        ----------
+        aantal : (int) representing the number of the specified article,
+                 which is by default set to 1 when the article is added
+        korting : (float) representing the rebate on the specified article
+                  which is by default set to 0.0 when the article is added
+
+        returns :
+            a dictionary containing
+
+              {
+                "korting": 20,
+                "aantal": 10,
+                "cid": <cid>,
+              }
+        """
+        endpoint = "cart/items"
+        params['cid'] = cid
+
+        return self.request(endpoint, "PUT", params=params)
